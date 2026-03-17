@@ -240,7 +240,7 @@ final class DataStore {
         return data.measurements.filter { roomIds.contains($0.roomId) }.sorted { $0.createdAt > $1.createdAt }
     }
 
-    func measurements(for roomId: UUID) -> [RoomMeasurement] {
+    func measurements(to roomId: UUID) -> [RoomMeasurement] {
         data.measurements.filter { $0.roomId == roomId }.sorted { $0.createdAt > $1.createdAt }
     }
 
