@@ -195,7 +195,7 @@ struct HomeView: View {
 
     private var roomsOverviewSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            BSectionHeader(title: "Rooms") {}
+            BSectionHeader(title: "Room Progress") {}
 
             if dataVM.rooms.isEmpty {
                 Text("No rooms added yet.")
@@ -205,13 +205,10 @@ struct HomeView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .bCardStyle()
             } else {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 12) {
-                        ForEach(dataVM.rooms.prefix(6)) { room in
-                            HomeRoomCard(room: room)
-                        }
-                    }
-                }
+                RoomTowerRow(rooms: Array(dataVM.rooms.prefix(8)))
+                    .environmentObject(dataVM)
+                    .environmentObject(appState)
+                    .padding(.horizontal, -20)
             }
         }
         .opacity(appeared ? 1 : 0)
@@ -258,22 +255,29 @@ struct HomeView: View {
 
     // MARK: - Quick Actions
 
+    @State private var showTimeline = false
+
     private var quickActionsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             BSectionHeader(title: "Quick Actions") {}
 
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                QuickActionButton(icon: "checkmark.circle", label: "Add Task", color: .bOrange) {
-                    // Handled via Tasks tab
-                }
+                QuickActionButton(icon: "checkmark.circle", label: "Add Task", color: .bOrange) {}
                 QuickActionButton(icon: "shoppingcart", label: "Shopping", color: .bTeal) {}
                 QuickActionButton(icon: "ruler", label: "Measure", color: .bBlue) {}
-                QuickActionButton(icon: "camera", label: "Add Photo", color: .bGreen) {}
+                QuickActionButton(icon: "chart.bar.xaxis", label: "Timeline", color: .bRed) {
+                    showTimeline = true
+                }
             }
         }
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 20)
         .animation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.35), value: appeared)
+        .sheet(isPresented: $showTimeline) {
+            GanttView()
+                .environmentObject(dataVM)
+                .environmentObject(appState)
+        }
     }
 }
 

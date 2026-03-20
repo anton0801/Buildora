@@ -97,45 +97,60 @@ struct ContactRow: View {
     @EnvironmentObject var dataVM: DataViewModel
     let contact: Contact
     @State private var showDetail = false
+    @State private var showAddEntry = false
 
     var body: some View {
-        HStack(spacing: 14) {
-            // Avatar
-            ZStack {
-                Circle()
-                    .fill(Color(hex: contact.role.color).opacity(0.2))
-                    .frame(width: 52, height: 52)
-                Text(String(contact.name.prefix(1)))
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
-                    .foregroundColor(Color(hex: contact.role.color))
-            }
-
-            VStack(alignment: .leading, spacing: 5) {
-                Text(contact.name).font(.bSubhead()).foregroundColor(.bNavy)
-                HStack(spacing: 6) {
-                    Image(systemName: contact.role.icon).font(.system(size: 11)).foregroundColor(Color(hex: contact.role.color))
-                    BTag(text: contact.role.rawValue, color: Color(hex: contact.role.color), small: true)
+        VStack(spacing: 0) {
+            HStack(spacing: 14) {
+                // Avatar
+                ZStack {
+                    Circle()
+                        .fill(Color(hex: contact.role.color).opacity(0.2))
+                        .frame(width: 52, height: 52)
+                    Text(String(contact.name.prefix(1)))
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(hex: contact.role.color))
                 }
-                if !contact.phone.isEmpty {
-                    Text(contact.phone).font(.bCaption()).foregroundColor(.bNavy.opacity(0.6))
-                }
-            }
 
-            Spacer()
-
-            // Quick call / message buttons
-            if !contact.phone.isEmpty {
-                Button(action: {
-                    if let url = URL(string: "tel:\(contact.phone.filter { $0.isNumber || $0 == "+" })") {
-                        UIApplication.shared.open(url)
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(contact.name).font(.bSubhead()).foregroundColor(.bNavy)
+                    HStack(spacing: 6) {
+                        Image(systemName: contact.role.icon).font(.system(size: 11)).foregroundColor(Color(hex: contact.role.color))
+                        BTag(text: contact.role.rawValue, color: Color(hex: contact.role.color), small: true)
+                        if contact.rating > 0 {
+                            HStack(spacing: 1) {
+                                ForEach(1...5, id: \.self) { s in
+                                    Image(systemName: s <= contact.rating ? "star.fill" : "star")
+                                        .font(.system(size: 8))
+                                        .foregroundColor(s <= contact.rating ? .bYellow : .bGrayBeige)
+                                }
+                            }
+                        }
                     }
-                }) {
-                    Image(systemName: "phone.fill")
-                        .font(.system(size: 16))
-                        .foregroundColor(.white)
-                        .frame(width: 36, height: 36)
-                        .background(Color.bGreen)
-                        .cornerRadius(10)
+                    if !contact.phone.isEmpty {
+                        Text(contact.phone).font(.bCaption()).foregroundColor(.bNavy.opacity(0.6))
+                    }
+                }
+
+                Spacer()
+
+                // Quick action buttons
+                HStack(spacing: 8) {
+                    if !contact.phone.isEmpty {
+                        quickBtn(icon: "phone.fill", color: .bGreen) {
+                            if let url = URL(string: "tel:\(contact.phone.filter { $0.isNumber || $0 == "+" })") {
+                                UIApplication.shared.open(url)
+                            }
+                        }
+                        quickBtn(icon: "message.fill", color: .bBlue) {
+                            if let url = URL(string: "sms:\(contact.phone.filter { $0.isNumber || $0 == "+" })") {
+                                UIApplication.shared.open(url)
+                            }
+                        }
+                    }
+                    quickBtn(icon: "plus.circle.fill", color: .bOrange) {
+                        showAddEntry = true
+                    }
                 }
             }
         }
@@ -143,6 +158,20 @@ struct ContactRow: View {
         .onTapGesture { showDetail = true }
         .sheet(isPresented: $showDetail) {
             ContactDetailView(contact: contact).environmentObject(dataVM).environmentObject(appState)
+        }
+        .sheet(isPresented: $showAddEntry) {
+            AddJobLogEntryView(contact: contact).environmentObject(dataVM).environmentObject(appState)
+        }
+    }
+
+    private func quickBtn(icon: String, color: Color, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: icon)
+                .font(.system(size: 15))
+                .foregroundColor(.white)
+                .frame(width: 32, height: 32)
+                .background(color)
+                .cornerRadius(9)
         }
     }
 }
@@ -155,6 +184,7 @@ struct ContactDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     let contact: Contact
     @State private var showEdit = false
+    @State private var rating: Int = 0
 
     var body: some View {
         NavigationView {
@@ -217,6 +247,12 @@ struct ContactDetailView: View {
                         }
                         .padding(16).bCardStyle().padding(.horizontal, 20)
 
+                        // Job Log Section
+                        JobLogSection(contact: contact, rating: $rating)
+                            .environmentObject(dataVM)
+                            .environmentObject(appState)
+                            .padding(.horizontal, 20)
+
                         Spacer(minLength: 40)
                     }.padding(.top, 16)
                 }
@@ -227,6 +263,12 @@ struct ContactDetailView: View {
                 leading: Button("Close") { presentationMode.wrappedValue.dismiss() },
                 trailing: Button("Edit") { showEdit = true }
             )
+            .onAppear { rating = contact.rating }
+            .onChange(of: rating) { newRating in
+                var updated = contact
+                updated.rating = newRating
+                dataVM.updateContact(updated)
+            }
         }
         .sheet(isPresented: $showEdit) {
             EditContactView(contact: contact).environmentObject(dataVM).environmentObject(appState)

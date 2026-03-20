@@ -24,6 +24,19 @@ struct Project: Codable, Identifiable, Equatable {
     var createdAt: Date = Date()
 }
 
+struct TrackingInfo {
+    let data: [String: String]
+    
+    var isEmpty: Bool { data.isEmpty }
+    var isOrganic: Bool { data["af_status"] == "Organic" }
+    
+    static var empty: TrackingInfo {
+        TrackingInfo(data: [:])
+    }
+}
+
+
+
 enum ProjectStatus: String, Codable, CaseIterable {
     case planning   = "Planning"
     case active     = "Active"
@@ -51,10 +64,22 @@ struct Room: Codable, Identifiable, Equatable {
     var height: Double = 2.7
     var stage: RoomStage = .planning
     var notes: String = ""
+    var startDate: Date? = nil
+    var endDate: Date? = nil
     var createdAt: Date = Date()
 
     var area: Double { width * length }
     var volume: Double { width * length * height }
+}
+
+struct NavigationInfo {
+    let data: [String: String]
+    
+    var isEmpty: Bool { data.isEmpty }
+    
+    static var empty: NavigationInfo {
+        NavigationInfo(data: [:])
+    }
 }
 
 enum RoomStage: String, Codable, CaseIterable {
@@ -95,7 +120,24 @@ enum RoomStage: String, Codable, CaseIterable {
     }
 }
 
-// MARK: - Renovation Task
+struct PermissionState {
+    var approved: Bool
+    var declined: Bool
+    var lastAsked: Date?
+    
+    var canAsk: Bool {
+        guard !approved && !declined else { return false }
+        if let date = lastAsked {
+            return Date().timeIntervalSince(date) / 86400 >= 3
+        }
+        return true
+    }
+    
+    static var initial: PermissionState {
+        PermissionState(approved: false, declined: false, lastAsked: nil)
+    }
+}
+
 
 struct RenovationTask: Codable, Identifiable, Equatable {
     var id: UUID = UUID()
@@ -117,6 +159,16 @@ struct RenovationTask: Codable, Identifiable, Equatable {
     var isToday: Bool {
         guard let due = dueDate else { return false }
         return Calendar.current.isDateInToday(due)
+    }
+}
+
+
+struct AppConfig {
+    var mode: String?
+    var firstLaunch: Bool
+    
+    static var initial: AppConfig {
+        AppConfig(mode: nil, firstLaunch: true)
     }
 }
 
@@ -145,6 +197,17 @@ enum TaskPriority: String, Codable, CaseIterable {
     }
 }
 
+enum AppPhase {
+    case idle
+    case loading
+    case validating
+    case validated
+    case processing
+    case ready(String)
+    case failed
+    case offline
+}
+
 enum TaskStatus: String, Codable, CaseIterable {
     case todo       = "To Do"
     case inProgress = "In Progress"
@@ -159,7 +222,19 @@ enum TaskStatus: String, Codable, CaseIterable {
     }
 }
 
-// MARK: - Material
+enum DomainEvent {
+    case trackingDataChanged(TrackingInfo)
+    case navigationDataChanged(NavigationInfo)
+    case validationCompleted(Bool)
+    case endpointReceived(String)
+    case permissionStateChanged(PermissionState)
+    case phaseChanged(AppPhase)
+    case shouldNavigateToMain
+    case shouldNavigateToWeb
+    case shouldShowPermissionPrompt
+    case shouldHidePermissionPrompt
+    case networkStatusChanged(Bool)
+}
 
 struct Material: Codable, Identifiable, Equatable {
     var id: UUID = UUID()
@@ -221,7 +296,19 @@ enum MaterialCategory: String, Codable, CaseIterable {
     }
 }
 
-// MARK: - Shopping Item
+struct LoadedConfig {
+    var mode: String?
+    var firstLaunch: Bool
+    var tracking: [String: String]
+    var navigation: [String: String]
+    var permissions: LoadedPermissions
+    
+    struct LoadedPermissions {
+        var approved: Bool
+        var declined: Bool
+        var lastAsked: Date?
+    }
+}
 
 struct ShoppingItem: Codable, Identifiable, Equatable {
     var id: UUID = UUID()
@@ -398,6 +485,22 @@ struct Contact: Codable, Identifiable, Equatable {
     var phone: String = ""
     var email: String = ""
     var notes: String = ""
+    var rating: Int = 0
+    var createdAt: Date = Date()
+}
+
+// MARK: - Job Log Entry
+
+struct JobLogEntry: Codable, Identifiable, Equatable {
+    var id: UUID = UUID()
+    var contactId: UUID
+    var date: Date = Date()
+    var tasksDone: String = ""
+    var hoursWorked: Double = 0
+    var amountPaid: Double = 0
+    var roomId: UUID? = nil
+    var notes: String = ""
+    var imagePath: String? = nil
     var createdAt: Date = Date()
 }
 
@@ -445,4 +548,5 @@ struct AppData: Codable {
     var measurements: [RoomMeasurement] = []
     var photos: [ProgressPhoto] = []
     var contacts: [Contact] = []
+    var jobLogEntries: [JobLogEntry] = []
 }

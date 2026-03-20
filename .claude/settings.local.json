@@ -5,7 +5,12 @@
       "Bash(gem list:*)",
       "Bash(ruby add_files.rb 2>&1)",
       "Bash(xcrun --sdk iphonesimulator swiftc -typecheck \\\\\n  /Users/antondanilov/Desktop/apps_cpastore/Buildora/Buildora/DesignSystem.swift \\\\\n  /Users/antondanilov/Desktop/apps_cpastore/Buildora/Buildora/Models/Models.swift \\\\\n  2>&1 | head -20)",
-      "Bash(find /Users/antondanilov/Desktop/apps_cpastore/Buildora/Buildora -name \"*.swift\" -exec wc -l {} + | sort -rn | head -5\necho \"---\"\nfind /Users/antondanilov/Desktop/apps_cpastore/Buildora/Buildora -name \"*.swift\" | xargs wc -l | tail -1)"
+      "Bash(find /Users/antondanilov/Desktop/apps_cpastore/Buildora/Buildora -name \"*.swift\" -exec wc -l {} + | sort -rn | head -5\necho \"---\"\nfind /Users/antondanilov/Desktop/apps_cpastore/Buildora/Buildora -name \"*.swift\" | xargs wc -l | tail -1)",
+      "Bash(xcodebuild -scheme Buildora -destination 'platform=iOS Simulator,name=iPhone 16' -quiet build)",
+      "Bash(sudo xcode-select:*)",
+      "Bash(xcodebuild -version)",
+      "Bash(DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -scheme Buildora -destination 'platform=iOS Simulator,name=iPhone 16' -quiet build)",
+      "Bash(DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -scheme Buildora -destination 'platform=iOS Simulator,name=iPhone 16' clean build)"
     ]
   }
 }

@@ -13,6 +13,7 @@ final class DataViewModel: ObservableObject {
     @Published var measurements: [RoomMeasurement] = []
     @Published var photos: [ProgressPhoto] = []
     @Published var contacts: [Contact] = []
+    @Published var jobLogEntries: [JobLogEntry] = []
 
     private let store = DataStore.shared
     private var userId: UUID?
@@ -30,6 +31,8 @@ final class DataViewModel: ObservableObject {
         guard let uid = userId else { return }
         projects = store.projects(for: uid)
         contacts = store.contacts(for: uid)
+        let contactIds = Set(contacts.map { $0.id })
+        jobLogEntries = store.data.jobLogEntries.filter { contactIds.contains($0.contactId) }
 
         if let pid = projectId {
             reloadProject(pid)
@@ -283,6 +286,32 @@ final class DataViewModel: ObservableObject {
     func deleteContact(_ contact: Contact) {
         store.deleteContact(contact)
         if let uid = userId { contacts = store.contacts(for: uid) }
+    }
+
+    // MARK: - Job Log Entries
+
+    func jobLogEntries(for contactId: UUID) -> [JobLogEntry] {
+        jobLogEntries.filter { $0.contactId == contactId }.sorted { $0.date > $1.date }
+    }
+
+    func addJobLogEntry(contactId: UUID, date: Date, tasksDone: String, hoursWorked: Double, amountPaid: Double, roomId: UUID?, notes: String, imageData: Data?) {
+        var entry = JobLogEntry(contactId: contactId, date: date, tasksDone: tasksDone, hoursWorked: hoursWorked, amountPaid: amountPaid, roomId: roomId, notes: notes)
+        if let imgData = imageData {
+            entry.imagePath = store.saveImage(imgData, for: entry.id)
+        }
+        store.addJobLogEntry(entry)
+        if let uid = userId {
+            let contactIds = Set(store.contacts(for: uid).map { $0.id })
+            jobLogEntries = store.data.jobLogEntries.filter { contactIds.contains($0.contactId) }
+        }
+    }
+
+    func deleteJobLogEntry(_ entry: JobLogEntry) {
+        store.deleteJobLogEntry(entry)
+        if let uid = userId {
+            let contactIds = Set(store.contacts(for: uid).map { $0.id })
+            jobLogEntries = store.data.jobLogEntries.filter { contactIds.contains($0.contactId) }
+        }
     }
 
     // MARK: - Dashboard Stats

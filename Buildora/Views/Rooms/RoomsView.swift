@@ -21,19 +21,35 @@ struct RoomsView: View {
                         )
                     } else {
                         ScrollView(showsIndicators: false) {
-                            LazyVStack(spacing: 16) {
-                                ForEach(dataVM.rooms) { room in
-                                    NavigationLink(destination: RoomDetailView(room: room).environmentObject(dataVM).environmentObject(appState)) {
-                                        RoomCard(room: room)
-                                            .environmentObject(dataVM)
-                                            .environmentObject(appState)
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
+                            VStack(spacing: 0) {
+                                // Tower Row
+                                VStack(alignment: .leading, spacing: 10) {
+                                    BSectionHeader(title: "Progress Towers") {}
+                                        .padding(.horizontal, 20)
+                                    RoomTowerRow(rooms: dataVM.rooms)
+                                        .environmentObject(dataVM)
+                                        .environmentObject(appState)
                                 }
-                                Spacer(minLength: 100)
+                                .padding(.top, 16)
+                                .padding(.bottom, 8)
+
+                                Divider().padding(.horizontal, 20).padding(.bottom, 8)
+
+                                // Room list
+                                LazyVStack(spacing: 16) {
+                                    ForEach(dataVM.rooms) { room in
+                                        NavigationLink(destination: RoomDetailView(room: room).environmentObject(dataVM).environmentObject(appState)) {
+                                            RoomCard(room: room)
+                                                .environmentObject(dataVM)
+                                                .environmentObject(appState)
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
+                                    }
+                                    Spacer(minLength: 100)
+                                }
+                                .padding(.horizontal, 20)
+                                .padding(.top, 8)
                             }
-                            .padding(.horizontal, 20)
-                            .padding(.top, 16)
                         }
                     }
                 }
@@ -427,6 +443,10 @@ struct EditRoomView: View {
     @State private var height = ""
     @State private var stage: RoomStage = .planning
     @State private var notes = ""
+    @State private var hasStartDate = false
+    @State private var startDate = Date()
+    @State private var hasEndDate = false
+    @State private var endDate = Date()
 
     var body: some View {
         NavigationView {
@@ -446,6 +466,39 @@ struct EditRoomView: View {
                         .pickerStyle(MenuPickerStyle())
                         .padding(14).background(Color.bSectionBG).cornerRadius(14)
 
+                        // Timeline dates
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Timeline (for Gantt chart)")
+                                .font(.bCaption()).foregroundColor(.bNavy.opacity(0.6))
+
+                            Toggle(isOn: $hasStartDate) {
+                                Label("Start Date", systemImage: "calendar.badge.plus")
+                                    .font(.bBody()).foregroundColor(.bNavy)
+                            }
+                            .tint(.bBlue)
+
+                            if hasStartDate {
+                                DatePicker("", selection: $startDate, displayedComponents: .date)
+                                    .datePickerStyle(CompactDatePickerStyle())
+                                    .labelsHidden()
+                                    .padding(12).background(Color.bSectionBG).cornerRadius(12)
+                            }
+
+                            Toggle(isOn: $hasEndDate) {
+                                Label("End Date", systemImage: "calendar.badge.minus")
+                                    .font(.bBody()).foregroundColor(.bNavy)
+                            }
+                            .tint(.bBlue)
+
+                            if hasEndDate {
+                                DatePicker("", selection: $endDate, in: (hasStartDate ? startDate : Date())..., displayedComponents: .date)
+                                    .datePickerStyle(CompactDatePickerStyle())
+                                    .labelsHidden()
+                                    .padding(12).background(Color.bSectionBG).cornerRadius(12)
+                            }
+                        }
+                        .padding(14).background(Color.bSectionBG).cornerRadius(14)
+
                         BTextField(placeholder: "Notes", text: $notes, icon: "note.text")
 
                         Button("Save Changes") { save() }.buttonStyle(BuildoraPrimaryButtonStyle())
@@ -463,6 +516,8 @@ struct EditRoomView: View {
                 height = room.height > 0 ? String(format: "%.2f", room.height) : ""
                 stage = room.stage
                 notes = room.notes
+                if let s = room.startDate { hasStartDate = true; startDate = s }
+                if let e = room.endDate { hasEndDate = true; endDate = e }
             }
         }
     }
@@ -474,6 +529,8 @@ struct EditRoomView: View {
         room.height = Double(height) ?? room.height
         room.stage = stage
         room.notes = notes
+        room.startDate = hasStartDate ? startDate : nil
+        room.endDate = hasEndDate ? endDate : nil
         dataVM.updateRoom(room)
         presentationMode.wrappedValue.dismiss()
     }

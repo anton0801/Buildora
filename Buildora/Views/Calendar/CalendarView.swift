@@ -48,6 +48,19 @@ struct CalendarView: View {
             }
             .navigationTitle("Calendar")
             .navigationBarTitleDisplayMode(.large)
+            .navigationBarItems(trailing:
+                NavigationLink(destination: GanttView()
+                    .environmentObject(dataVM)
+                    .environmentObject(appState)
+                ) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "chart.bar.xaxis")
+                        Text("Timeline")
+                            .font(.bCaption())
+                    }
+                    .foregroundColor(.bOrange)
+                }
+            )
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }

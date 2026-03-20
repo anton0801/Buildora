@@ -6,33 +6,114 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8F370D5E2F6C22760040467C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 8F370D5D2F6C22760040467C /* FirebaseDatabase */; };
+		8F370D602F6C22760040467C /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8F370D5F2F6C22760040467C /* FirebaseMessaging */; };
+		8F370D632F6C23500040467C /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = 8F370D622F6C23500040467C /* AppsFlyerLib */; };
+		8F370D712F6C24130040467C /* BuildoraNotificationExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8F370D6A2F6C24130040467C /* BuildoraNotificationExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8F370D792F6C241E0040467C /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8F370D782F6C241E0040467C /* FirebaseMessaging */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8F370D6F2F6C24130040467C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F85174F2F632D25002F485B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F370D692F6C24130040467C;
+			remoteInfo = BuildoraNotificationExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8F370D762F6C24130040467C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8F370D712F6C24130040467C /* BuildoraNotificationExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		8F370D6A2F6C24130040467C /* BuildoraNotificationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BuildoraNotificationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8517572F632D25002F485B /* Buildora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buildora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8F370D652F6C235B0040467C /* Exceptions for "Buildora" folder in "Buildora" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8F8517562F632D25002F485B /* Buildora */;
+		};
+		8F370D752F6C24130040467C /* Exceptions for "BuildoraNotificationExtension" folder in "BuildoraNotificationExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8F370D692F6C24130040467C /* BuildoraNotificationExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		8F370D6B2F6C24130040467C /* BuildoraNotificationExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8F370D752F6C24130040467C /* Exceptions for "BuildoraNotificationExtension" folder in "BuildoraNotificationExtension" target */,
+			);
+			path = BuildoraNotificationExtension;
+			sourceTree = "<group>";
+		};
 		8F8517592F632D25002F485B /* Buildora */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8F370D652F6C235B0040467C /* Exceptions for "Buildora" folder in "Buildora" target */,
+			);
 			path = Buildora;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8F370D672F6C24130040467C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F370D792F6C241E0040467C /* FirebaseMessaging in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F8517542F632D25002F485B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F370D602F6C22760040467C /* FirebaseMessaging in Frameworks */,
+				8F370D5E2F6C22760040467C /* FirebaseDatabase in Frameworks */,
+				8F370D632F6C23500040467C /* AppsFlyerLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F370D772F6C241E0040467C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8F85174E2F632D25002F485B = {
 			isa = PBXGroup;
 			children = (
 				8F8517592F632D25002F485B /* Buildora */,
+				8F370D6B2F6C24130040467C /* BuildoraNotificationExtension */,
+				8F370D772F6C241E0040467C /* Frameworks */,
 				8F8517582F632D25002F485B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				8F8517572F632D25002F485B /* Buildora.app */,
+				8F370D6A2F6C24130040467C /* BuildoraNotificationExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +130,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8F370D692F6C24130040467C /* BuildoraNotificationExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F370D722F6C24130040467C /* Build configuration list for PBXNativeTarget "BuildoraNotificationExtension" */;
+			buildPhases = (
+				8F370D662F6C24130040467C /* Sources */,
+				8F370D672F6C24130040467C /* Frameworks */,
+				8F370D682F6C24130040467C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				8F370D6B2F6C24130040467C /* BuildoraNotificationExtension */,
+			);
+			name = BuildoraNotificationExtension;
+			packageProductDependencies = (
+				8F370D782F6C241E0040467C /* FirebaseMessaging */,
+			);
+			productName = BuildoraNotificationExtension;
+			productReference = 8F370D6A2F6C24130040467C /* BuildoraNotificationExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		8F8517562F632D25002F485B /* Buildora */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8F8517632F632D26002F485B /* Build configuration list for PBXNativeTarget "Buildora" */;
@@ -55,16 +160,21 @@
 				8F8517532F632D25002F485B /* Sources */,
 				8F8517542F632D25002F485B /* Frameworks */,
 				8F8517552F632D25002F485B /* Resources */,
+				8F370D762F6C24130040467C /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8F370D702F6C24130040467C /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				8F8517592F632D25002F485B /* Buildora */,
 			);
 			name = Buildora;
 			packageProductDependencies = (
+				8F370D5D2F6C22760040467C /* FirebaseDatabase */,
+				8F370D5F2F6C22760040467C /* FirebaseMessaging */,
+				8F370D622F6C23500040467C /* AppsFlyerLib */,
 			);
 			productName = Buildora;
 			productReference = 8F8517572F632D25002F485B /* Buildora.app */;
@@ -80,6 +190,9 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
+					8F370D692F6C24130040467C = {
+						CreatedOnToolsVersion = 16.4;
+					};
 					8F8517562F632D25002F485B = {
 						CreatedOnToolsVersion = 16.4;
 					};
@@ -94,17 +207,29 @@
 			);
 			mainGroup = 8F85174E2F632D25002F485B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				8F370D5C2F6C22760040467C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				8F370D612F6C23500040467C /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8F8517582F632D25002F485B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				8F8517562F632D25002F485B /* Buildora */,
+				8F370D692F6C24130040467C /* BuildoraNotificationExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8F370D682F6C24130040467C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F8517552F632D25002F485B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +240,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8F370D662F6C24130040467C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F8517532F632D25002F485B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +256,76 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		8F370D702F6C24130040467C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F370D692F6C24130040467C /* BuildoraNotificationExtension */;
+			targetProxy = 8F370D6F2F6C24130040467C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		8F370D732F6C24130040467C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BuildoraNotificationExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BuildoraNotificationExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.udorabuil.Buildora.BuildoraNotificationExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		8F370D742F6C24130040467C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BuildoraNotificationExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BuildoraNotificationExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.udorabuil.Buildora.BuildoraNotificationExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		8F8517612F632D26002F485B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -249,8 +450,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Buildora/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Buildora;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow to use this feature in this application.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Buildora may use limited technical information from your device to support project management features, monitor app performance, and enhance overall reliability. This data is used only for internal analytics and continuous improvement of the app. It is not used to track users across other apps or websites and is not shared with third parties for advertising purposes.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -261,11 +465,11 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.3;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.00.01;
 				PRODUCT_BUNDLE_IDENTIFIER = com.udorabuil.Buildora;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -289,8 +493,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Buildora/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Buildora;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow to use this feature in this application.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Buildora may use limited technical information from your device to support project management features, monitor app performance, and enhance overall reliability. This data is used only for internal analytics and continuous improvement of the app. It is not used to track users across other apps or websites and is not shared with third parties for advertising purposes.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -301,11 +508,11 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.3;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.00.01;
 				PRODUCT_BUNDLE_IDENTIFIER = com.udorabuil.Buildora;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -322,6 +529,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8F370D722F6C24130040467C /* Build configuration list for PBXNativeTarget "BuildoraNotificationExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F370D732F6C24130040467C /* Debug */,
+				8F370D742F6C24130040467C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8F8517522F632D25002F485B /* Build configuration list for PBXProject "Buildora" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -341,6 +557,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8F370D5C2F6C22760040467C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.11.0;
+			};
+		};
+		8F370D612F6C23500040467C /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.17.9;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8F370D5D2F6C22760040467C /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F370D5C2F6C22760040467C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		8F370D5F2F6C22760040467C /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F370D5C2F6C22760040467C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		8F370D622F6C23500040467C /* AppsFlyerLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F370D612F6C23500040467C /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
+			productName = AppsFlyerLib;
+		};
+		8F370D782F6C241E0040467C /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F370D5C2F6C22760040467C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8F85174F2F632D25002F485B /* Project object */;
 }

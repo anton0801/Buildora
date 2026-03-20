@@ -328,6 +328,32 @@ final class DataStore {
         try? Data(contentsOf: URL(fileURLWithPath: path))
     }
 
+    // MARK: - Job Log Entries
+
+    func jobLogEntries(for contactId: UUID) -> [JobLogEntry] {
+        data.jobLogEntries.filter { $0.contactId == contactId }.sorted { $0.date > $1.date }
+    }
+
+    func addJobLogEntry(_ entry: JobLogEntry) {
+        data.jobLogEntries.append(entry)
+        save()
+    }
+
+    func updateJobLogEntry(_ entry: JobLogEntry) {
+        if let idx = data.jobLogEntries.firstIndex(where: { $0.id == entry.id }) {
+            data.jobLogEntries[idx] = entry
+            save()
+        }
+    }
+
+    func deleteJobLogEntry(_ entry: JobLogEntry) {
+        if let path = data.jobLogEntries.first(where: { $0.id == entry.id })?.imagePath {
+            try? FileManager.default.removeItem(atPath: path)
+        }
+        data.jobLogEntries.removeAll { $0.id == entry.id }
+        save()
+    }
+
     // MARK: - Statistics
 
     func completedTasksCount(for projectId: UUID) -> Int {
